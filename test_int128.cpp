@@ -125,3 +125,21 @@ TEST(Int128Test, CombinedOperations) {
     
     EXPECT_EQ(result, expected);
 }
+
+TEST(Int128Test, StringInput) {
+    int128_t a("123456789012345678901234567890");
+    int128_t b("987654321098765432109876543210");
+    int128_t result = a + b;
+    
+    int128_t expected("1111111110111111111011111111100");
+    EXPECT_EQ(result, expected);
+}
+
+TEST(Int128Test, StringInput2) {
+    int128_t a = "123456789012345678901234567890";
+    int128_t b("987654321098765432109876543210");
+    int128_t result = a + b;
+    
+    int128_t expected("1111111110111111111011111111100");
+    EXPECT_EQ(result, expected);
+}
