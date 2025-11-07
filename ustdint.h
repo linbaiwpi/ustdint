@@ -2,7 +2,7 @@
 
 #ifndef __USTDINT_H__
 
-#define VISUALIZE_VALUE
+// #define VISUALIZE_VALUE  // removed: now controlled by CMake option
 
 #include <cstdint>
 #include <string>

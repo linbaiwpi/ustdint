@@ -15,6 +15,11 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
 
 message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 
+# Option to enable string visualization helpers in int128_t
+option(VISUALIZE_VALUE "Enable to_dec_string()/to_hex_string() helpers" OFF)
+message(STATUS "VISUALIZE_VALUE option: ${VISUALIZE_VALUE}")
+message(STATUS "Tip: toggle with -DVISUALIZE_VALUE=ON/OFF, or use ccmake/cmake-gui for interactive selection")
+
 include(FetchContent)
 FetchContent_Declare(
   googletest
@@ -34,5 +39,21 @@ target_link_libraries(
   GTest::gtest_main
 )
 
+if (VISUALIZE_VALUE)
+  target_compile_definitions(test_int128 PRIVATE VISUALIZE_VALUE)
+  # 若需要所有目标启用，可改为 PUBLIC 或使用 add_compile_definitions(VISUALIZE_VALUE)
+endif()
+
 include(GoogleTest)
 gtest_discover_tests(test_int128)
+
+message(STATUS "====================================== HINT ======================================")
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+  message(STATUS "configure with -DCMAKE_BUILD_TYPE=Release for optimized build")
+endif()
+if (VISUALIZE_VALUE)
+  message(STATUS "configure with -DVISUALIZE_VALUE=OFF for NOT visuliazing values in string")
+else()
+  message(STATUS "configure with -DVISUALIZE_VALUE=ON for visuliazing values in string")
+endif()
+message(STATUS "==================================================================================")
